@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
+
 public class App {
     public static void main(String[] args) throws SQLException {
         var app = getApp();
@@ -29,6 +30,7 @@ public class App {
 
     private static String getDB() {
         var db = System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1");
+        System.out.println("Using DB: " + db);
         return db;
     }
 
@@ -47,13 +49,7 @@ public class App {
         var url = App.class.getClassLoader().getResourceAsStream("schema.sql");
         var sql = new BufferedReader(new InputStreamReader(url)).lines().collect(Collectors.joining("\n"));
         try (var connection = dataSource.getConnection(); var statement = connection.createStatement()) {
-            for (String query : sql.split(";")) {
-                var trimmed = query.trim();
-                if (!trimmed.isEmpty()) {
-                    statement.execute(trimmed);
-                }
-            }
-
+            statement.execute(sql);
         }
         BaseRepository.dataSource = dataSource;
 
