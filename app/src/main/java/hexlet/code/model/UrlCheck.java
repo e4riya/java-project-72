@@ -8,8 +8,12 @@ import java.sql.Timestamp;
 
 @Getter
 @RequiredArgsConstructor
-public class Url {
-    private final String name;
+public class UrlCheck {
+    private final Integer statusCode;
+    private final String title;
+    private final String h1;
+    private final String description;
+    private final Long urlId;
     private final Timestamp createdAt;
 
     @Setter
