@@ -47,7 +47,12 @@ public class App {
         var url = App.class.getClassLoader().getResourceAsStream("schema.sql");
         var sql = new BufferedReader(new InputStreamReader(url)).lines().collect(Collectors.joining("\n"));
         try (var connection = dataSource.getConnection(); var statement = connection.createStatement()) {
-            statement.execute(sql);
+            for (String query : sql.split(";")) {
+                var trimmed = query.trim();
+                if (!trimmed.isEmpty()) {
+                    statement.execute(trimmed);
+                }
+            }
 
         }
         BaseRepository.dataSource = dataSource;
