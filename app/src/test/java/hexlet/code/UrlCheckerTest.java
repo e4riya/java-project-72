@@ -22,13 +22,13 @@ class UrlCheckerTest {
     @BeforeEach
     void setUp() throws SQLException {
         App.getApp();
+        UrlRepository.removeAll();
     }
 
     @BeforeAll
     static void setupServer() throws Exception {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
-        App.getApp();
     }
 
     @AfterAll
