@@ -10,7 +10,6 @@ import io.javalin.Javalin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.stream.Stream;
@@ -23,8 +22,9 @@ public class AppTest {
     private Javalin app;
 
     @BeforeEach
-    public void setup() throws IOException, SQLException {
+    public void setup() throws SQLException {
         app = App.getApp();
+        UrlCheckRepository.removeAll();
         UrlRepository.removeAll();
     }
 
