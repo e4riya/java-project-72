@@ -23,7 +23,7 @@ public class App {
     }
 
     private static int getPort() {
-        var port = System.getenv().getOrDefault("PORT", "8080");
+        var port = System.getenv().getOrDefault("PORT", "7070");
         return Integer.parseInt(port);
     }
 
