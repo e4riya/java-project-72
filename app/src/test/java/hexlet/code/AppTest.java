@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import hexlet.code.model.Url;
 import hexlet.code.utils.NamedRoutes;
-import hexlet.code.utils.UrlCheckRepository;
-import hexlet.code.utils.UrlRepository;
+import hexlet.code.repositories.UrlCheckRepository;
+import hexlet.code.repositories.UrlRepository;
 import io.javalin.Javalin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,8 @@ public class AppTest {
         JavalinTest.test(
             app, (server, client) -> {
                 var url =
-                    new Url("https://www.youtube.com/?app=desktop&hl=ru", new Timestamp(System.currentTimeMillis()));
+                    new Url("https://www.youtube.com/?app=desktop&hl=ru");
+                url.setCreatedAt(new Timestamp(System.currentTimeMillis()));
                 UrlRepository.save(url);
                 var response = client.get(NamedRoutes.getUrl(url.getId()));
                 assertEquals(200, response.code());

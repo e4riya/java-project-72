@@ -19,8 +19,8 @@
                 <tr>
                     <td>${url.getId()}</td>
                     <td><a href="${NamedRoutes.getUrl(url.getId())}">${url.getName()}</a></td>
-                    <td>${page.getChecks().get(url.getId()) != null ? page.getChecks().get(url.getId()).getCreatedAt().toString() : ""}</td>
-                    <td>${page.getChecks().get(url.getId()) != null ? page.getChecks().get(url.getId()).getStatusCode().toString() : ""}</td>
+                    <td>${page.getUrlIdToCheck().get(url.getId()) != null ? page.getUrlIdToCheck().get(url.getId()).getCreatedAt().toString() : ""}</td>
+                    <td>${page.getUrlIdToCheck().get(url.getId()) != null ? page.getUrlIdToCheck().get(url.getId()).getStatusCode().toString() : ""}</td>
                 </tr>
                 @endfor
             </tbody>

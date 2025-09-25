@@ -10,8 +10,9 @@ import java.sql.Timestamp;
 @RequiredArgsConstructor
 public class Url {
     private final String name;
-    private final Timestamp createdAt;
 
     @Setter
     private Long id;
+    @Setter
+    private Timestamp createdAt;
 }

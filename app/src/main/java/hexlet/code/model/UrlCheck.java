@@ -14,8 +14,9 @@ public class UrlCheck {
     private final String h1;
     private final String description;
     private final Long urlId;
-    private final Timestamp createdAt;
 
     @Setter
     private Long id;
+    @Setter
+    private Timestamp createdAt;
 }

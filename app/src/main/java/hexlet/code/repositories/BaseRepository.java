@@ -1,4 +1,4 @@
-package hexlet.code.utils;
+package hexlet.code.repositories;
 
 import com.zaxxer.hikari.HikariDataSource;
 

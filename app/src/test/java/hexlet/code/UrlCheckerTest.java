@@ -2,7 +2,7 @@ package hexlet.code;
 
 import hexlet.code.model.Url;
 import hexlet.code.utils.UrlChecker;
-import hexlet.code.utils.UrlRepository;
+import hexlet.code.repositories.UrlRepository;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
@@ -58,7 +58,8 @@ class UrlCheckerTest {
         );
 
         // Создаём тестовый URL в репозитории
-        var testUrl = new Url(mockWebServer.url("/").toString(), new Timestamp(System.currentTimeMillis()));
+        var testUrl = new Url(mockWebServer.url("/").toString());
+        testUrl.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         UrlRepository.save(testUrl);
 
         // Выполняем проверку
@@ -77,7 +78,8 @@ class UrlCheckerTest {
                                   .setBody("<html><body>Not Found</body></html>")
         );
 
-        var testUrl = new Url(mockWebServer.url("/404").toString(), new Timestamp(System.currentTimeMillis()));
+        var testUrl = new Url(mockWebServer.url("/404").toString());
+        testUrl.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         UrlRepository.save(testUrl);
 
         var urlCheck = UrlChecker.check(testUrl.getId());

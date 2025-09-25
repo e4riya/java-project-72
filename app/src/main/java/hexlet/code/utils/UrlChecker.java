@@ -1,6 +1,7 @@
 package hexlet.code.utils;
 
 import hexlet.code.model.UrlCheck;
+import hexlet.code.repositories.UrlRepository;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.jsoup.Jsoup;
@@ -8,9 +9,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 public class UrlChecker {
+
     public static UrlCheck check(Long id) throws SQLException {
         var url = UrlRepository.find(id).get();
         HttpResponse<String> response = Unirest.get(url.getName()).asString();
@@ -23,7 +24,6 @@ public class UrlChecker {
         Element descEl = doc.selectFirst("meta[name=description]");
         String description = descEl != null ? descEl.attr("content") : null;
 
-        var result = new UrlCheck(statusCode, title, h1, description, id, new Timestamp(System.currentTimeMillis()));
-        return result;
+        return new UrlCheck(statusCode, title, h1, description, id);
     }
 }
