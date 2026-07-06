@@ -5,7 +5,7 @@
 @template.main(
     page = page,
     content = @`
-        <table class="table table-striped table-bordered table-hover">
+    <table data-test="urls" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
