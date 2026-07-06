@@ -82,10 +82,13 @@ public class UrlCheckRepository extends BaseRepository {
     }
     public static Map<Long, UrlCheck> findAll() throws SQLException {
         String sql = "SELECT * FROM url_checks";
+
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql)) {
+
             var resultSet = preparedStatement.executeQuery();
             var idToCheck = new HashMap<Long, UrlCheck>();
+
             while (resultSet.next()) {
                 var id = resultSet.getLong("id");
                 var statusCode = resultSet.getInt("status_code");
@@ -94,10 +97,14 @@ public class UrlCheckRepository extends BaseRepository {
                 var description = resultSet.getString("description");
                 var createdAt = resultSet.getTimestamp("created_at");
                 var urlId = resultSet.getLong("url_id");
-                var urlCheck = new UrlCheck(statusCode, title, h1, description, id);
+
+                var urlCheck = new UrlCheck(statusCode, title, h1, description, urlId);
+                urlCheck.setId(id);
                 urlCheck.setCreatedAt(createdAt);
+
                 idToCheck.put(urlId, urlCheck);
             }
+
             return idToCheck;
         }
     }
