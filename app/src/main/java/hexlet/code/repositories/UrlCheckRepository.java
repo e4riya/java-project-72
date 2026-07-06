@@ -119,6 +119,11 @@ public class UrlCheckRepository extends BaseRepository {
         if (value == null) {
             return null;
         }
-        return value.length() > maxLength ? value.substring(0, maxLength) : value;
+
+        if (value.length() <= maxLength) {
+            return value;
+        }
+
+        return value.substring(0, maxLength - 3) + "...";
     }
 }
