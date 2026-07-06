@@ -88,12 +88,14 @@ public class UrlController {
     public static void createCheck(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var urlCheck = UrlChecker.check(id);
+
         if (urlCheck.getStatusCode() == 200) {
             UrlCheckRepository.save(urlCheck);
             ctx.sessionAttribute("flash", "Страница успешно проверена");
         } else {
-            ctx.sessionAttribute("flash", "Некорректный адрес");
+            ctx.sessionAttribute("flash", "Произошла ошибка при проверке");
         }
+
         ctx.redirect(NamedRoutes.getUrl(id));
     }
 }
