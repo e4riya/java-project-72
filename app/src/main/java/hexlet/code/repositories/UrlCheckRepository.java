@@ -24,7 +24,7 @@ public class UrlCheckRepository extends BaseRepository {
             preparedStatement.setInt(2, urlCheck.getStatusCode());
             preparedStatement.setString(3, truncate(urlCheck.getH1(), 100));
             preparedStatement.setString(4, truncate(urlCheck.getTitle(), 100));
-            preparedStatement.setString(5, truncate(urlCheck.getDescription(), 255));
+            preparedStatement.setString(5, truncate(urlCheck.getDescription(), 203));
             preparedStatement.setTimestamp(6, urlCheck.getCreatedAt());
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
