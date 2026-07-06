@@ -31,16 +31,24 @@ public class UrlController {
 
     public static void create(Context ctx) {
         try {
-            var result = new URI(ctx.formParam("url")).toURL();
-            var entity = new Url(result.toString());
+            var uri = new URI(ctx.formParam("url")).toURL();
+
+            var port = uri.getPort() == -1 ? "" : ":" + uri.getPort();
+            var normalizedUrl = uri.getProtocol() + "://" + uri.getHost() + port;
+
+            var entity = new Url(normalizedUrl);
+
             try {
                 UrlRepository.save(entity);
                 ctx.sessionAttribute("flash", "Страница успешно добавлена");
             } catch (SQLException e) {
                 ctx.sessionAttribute("flash", "Страница уже существует");
-            } finally {
-                ctx.redirect("/urls");
             }
+
+            var savedUrl = UrlRepository.findByName(normalizedUrl)
+                                        .orElseThrow(() -> new NotFoundResponse("Url not found"));
+
+            ctx.redirect(NamedRoutes.getUrl(savedUrl.getId()));
         } catch (Exception e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.redirect("/");
