@@ -47,20 +47,25 @@ public class UrlRepository extends BaseRepository {
     }
 
     public static List<Url> getEntites() throws SQLException {
-        String sql = "SELECT * FROM urls";
+        String sql = "SELECT * FROM urls ORDER BY id DESC";
+
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql)) {
+
             var resultSet = preparedStatement.executeQuery();
             var result = new ArrayList<Url>();
+
             while (resultSet.next()) {
                 var id = resultSet.getLong("id");
                 var name = resultSet.getString("name");
                 var createdAt = resultSet.getTimestamp("created_at");
+
                 var url = new Url(name);
                 url.setCreatedAt(createdAt);
                 url.setId(id);
                 result.add(url);
             }
+
             return result;
         }
     }

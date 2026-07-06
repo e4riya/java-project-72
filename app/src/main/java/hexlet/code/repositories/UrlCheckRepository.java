@@ -81,7 +81,7 @@ public class UrlCheckRepository extends BaseRepository {
         }
     }
     public static Map<Long, UrlCheck> findAll() throws SQLException {
-        String sql = "SELECT * FROM url_checks";
+        String sql = "SELECT DISTINCT ON (url_id) * FROM url_checks ORDER BY url_id, created_at DESC";
 
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql)) {
