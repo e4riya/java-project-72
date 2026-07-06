@@ -22,9 +22,9 @@ public class UrlCheckRepository extends BaseRepository {
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, urlCheck.getUrlId());
             preparedStatement.setInt(2, urlCheck.getStatusCode());
-            preparedStatement.setString(3, urlCheck.getH1());
-            preparedStatement.setString(4, urlCheck.getTitle());
-            preparedStatement.setString(5, urlCheck.getDescription());
+            preparedStatement.setString(3, truncate(urlCheck.getH1(), 100));
+            preparedStatement.setString(4, truncate(urlCheck.getTitle(), 100));
+            preparedStatement.setString(5, truncate(urlCheck.getDescription(), 255));
             preparedStatement.setTimestamp(6, urlCheck.getCreatedAt());
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
@@ -114,5 +114,11 @@ public class UrlCheckRepository extends BaseRepository {
              var preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.executeUpdate();
         }
+    }
+    private static String truncate(String value, int maxLength) {
+        if (value == null) {
+            return null;
+        }
+        return value.length() > maxLength ? value.substring(0, maxLength) : value;
     }
 }
