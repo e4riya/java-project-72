@@ -50,8 +50,11 @@ public class UrlController {
 
             ctx.redirect(NamedRoutes.getUrl(savedUrl.getId()));
         } catch (Exception e) {
-            ctx.sessionAttribute("flash", "Некорректный URL");
-            ctx.redirect("/");
+            var page = new BasePage();
+            page.setFlash("Некорректный URL");
+
+            ctx.status(422);
+            ctx.render("build.jte", model("page", page));
         }
     }
 

@@ -67,7 +67,7 @@ public class AppTest {
                 assertEquals(500, response.code());
 
                 response = client.post(NamedRoutes.getUrls());
-                assertEquals(200, response.code());
+                assertEquals(422, response.code());
             }
         );
     }
